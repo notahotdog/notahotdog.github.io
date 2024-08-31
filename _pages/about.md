@@ -19,12 +19,11 @@ social: true # includes social icons at the bottom of the page
 
 I am Umar, a FinTech student at the National University of Singapore.
 
-I strive to build impactful scalable AI Solutions for financial usecases. 
+I strive to build impactful scalable AI Solutions for financial usecases. The intersection between technology and finance has always been a constant source of fascination for me, shaping both my academic and professional aspirations.
 
-The intersection between technology and finance has always been a constant source of fascination for me, shaping both my academic and professional aspirations.From the outset of my journey, I have always been fascinated with its ever disrupting nature and ability to drive positive social change. The blend between the two domains and its transformative potential ignites my passion to contribute to this ever-evolving field.
+Previously, I was a machine learning engineer at the Development Bank of Singapore([DBS](https://www.dbs.com.sg/index/default.page)) building conversational AI tools to power banking service. In my professional experience as part of the Conversational AI team, I played a pivotal role along with my team in pioneering the adoption of large language models (LLMs) and RAG systems for production use cases at the bank. I was also involved in the development of a knowledge and vector databases with semantic search capabilities for expedited document analysis and information retrievals and which we used to revamp our existing chatbots. 
 
-Previously, I was a machine learning engineer at the Development Bank of Singapore([DBS](https://www.dbs.com.sg/index/default.page)) building conversational AI tools to power banking service. In my professional experience as part of the Conversational AI team, I played a pivotal role along with my team in pioneering the adoption of large language models (LLMs) for production use cases at the bank. l was intensely involved in the end-to-end development of usecases such as call center summary automation using LLMs. This allowed call center agents to efficiently transcribe, summarize calls, and generate responses. I was also involved in the development of a knowledge and vector databases with semantic search capabilities for expedited document analysis and information retrievals and which we used to revamp our existing chatbots. 
-
+\\
 I also delivered data science and machine learning projects with [DNV](https://www.dnv.sg/) where i worked on fuel efficiency modelling.
 
 I graduated from the National University of Singapore with a B.Eng. in Computer Engineering. Since August 2024, I’m also pursuing an M.S. in Digital Financial Technology at NUS.
