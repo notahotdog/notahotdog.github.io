@@ -17,7 +17,7 @@ selected_papers: true # includes a list of papers marked as "selected={true}"
 social: true # includes social icons at the bottom of the page
 ---
 
-I am Umar, a FinTech student at the National University of Singapore.
+I am Umar, a Graduate FinTech student at the National University of Singapore.
 
 I strive to build impactful scalable AI Solutions for financial usecases. The intersection between technology and finance has always been a constant source of fascination for me, shaping both my academic and professional aspirations.
 
