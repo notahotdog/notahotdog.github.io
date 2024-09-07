@@ -7,7 +7,7 @@ subtitle: NUS School of Computing
 
 profile:
   align: right
-  image: umar_profile_1.png
+  image: umar_profile_1.jpg
   image_circular: false # crops the image to make it circular
   # more_info: >
     # <p>96569120</p>
