@@ -7,14 +7,14 @@ subtitle: NUS School of Computing
 
 profile:
   align: right
-  image: umar_profile_1.jpg
-  image_circular: false # crops the image to make it circular
+  image: umar_profile.png
+  image_circular: true # crops the image to make it circular
   # more_info: >
     # <p>96569120</p>
 
-# news: true # includes a list of news items
-# selected_papers: true # includes a list of papers marked as "selected={true}"
-# social: true # includes social icons at the bottom of the page
+news: false # includes a list of news items
+selected_papers: false # includes a list of papers marked as "selected={true}"
+social: false # includes social icons at the bottom of the page
 ---
 
 Hi I am Umar, a Graduate FinTech student at the National University of Singapore(NUS).
