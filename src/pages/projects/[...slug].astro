@@ -1,0 +1,24 @@
+---
+import { type CollectionEntry, getCollection } from "astro:content";
+import ProjectDetails from "@/layouts/ProjectDetails.astro";
+
+export async function getStaticPaths() {
+  const all = await getCollection("projects", ({ data }) => !data.draft);
+  const sorted = all.sort(
+    (a, b) => b.data.pubDatetime.valueOf() - a.data.pubDatetime.valueOf()
+  );
+  return sorted.map(project => ({
+    params: { slug: project.id },
+    props: { project, projects: sorted },
+  }));
+}
+
+type Props = {
+  project: CollectionEntry<"projects">;
+  projects: CollectionEntry<"projects">[];
+};
+
+const { project, projects } = Astro.props as Props;
+---
+
+<ProjectDetails {project} {projects} />

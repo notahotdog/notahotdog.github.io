@@ -1,0 +1,101 @@
+@import "tailwindcss";
+@import "./typography.css";
+
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+:root,
+html[data-theme="light"] {
+  --background: #f8fafc;
+  --surface: #ffffff;
+  --foreground: #0f172a;
+  --muted-foreground: #475569;
+  --accent: #0891b2;
+  --muted: #f1f5f9;
+  --border: #e2e8f0;
+}
+
+html[data-theme="dark"] {
+  --background: #0a192f;
+  --surface: #112240;
+  --foreground: #ccd6f6;
+  --muted-foreground: #8892b0;
+  --accent: #22d3ee;
+  --muted: #112240;
+  --border: #1e293b;
+}
+
+@theme inline {
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-foreground: var(--foreground);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-accent/60;
+    scrollbar-width: auto;
+    scrollbar-color: var(--color-border) transparent;
+  }
+  html {
+    @apply overflow-y-scroll scroll-smooth;
+  }
+  body {
+    @apply flex min-h-svh flex-col bg-background text-foreground antialiased selection:bg-accent/20 selection:text-foreground;
+    font-family: var(--font-sans), ui-sans-serif, system-ui, -apple-system,
+      sans-serif;
+  }
+  a,
+  button {
+    @apply outline-offset-2 outline-accent focus-visible:no-underline focus-visible:outline-2;
+  }
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+}
+
+@utility max-w-app {
+  @apply max-w-2xl;
+}
+
+@utility app-layout {
+  @apply mx-auto w-full max-w-app px-6;
+}
+
+@utility font-mono {
+  font-family: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+.active-nav {
+  @apply text-foreground;
+}
+
+:target {
+  scroll-margin-block: 5rem;
+}
+
+/* Spotlight cursor effect for landing page */
+.spotlight {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  transition: opacity 300ms ease;
+  background: radial-gradient(
+    600px at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    rgba(34, 211, 238, 0.06),
+    transparent 80%
+  );
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spotlight {
+    display: none;
+  }
+}

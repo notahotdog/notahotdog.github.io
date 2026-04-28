@@ -1,0 +1,58 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import Main from "@/layouts/Main.astro";
+import { SITE } from "@/config";
+
+const all = await getCollection("projects", ({ data }) => !data.draft);
+const sorted = all.sort(
+  (a, b) => b.data.pubDatetime.valueOf() - a.data.pubDatetime.valueOf()
+);
+---
+
+<Layout title={`Projects | ${SITE.title}`}>
+  <Header />
+  <Main pageTitle="Projects" pageDesc="Things I've built — write-ups, tech, lessons.">
+    {
+      sorted.length === 0 ? (
+        <p class="text-muted-foreground">No projects yet.</p>
+      ) : (
+        <ul class="group/list">
+          {sorted.map(project => (
+            <li class="mb-10">
+              <a
+                href={`/projects/${project.id}/`}
+                class="group relative block transition-all lg:hover:!opacity-100 lg:group-hover/list:opacity-50"
+              >
+                <div class="absolute -inset-x-4 -inset-y-4 z-0 hidden rounded-md transition motion-reduce:transition-none lg:block lg:group-hover:bg-surface/50 lg:group-hover:shadow-[inset_0_1px_0_0] lg:group-hover:shadow-border" />
+                <div class="relative z-10">
+                  <h2 class="text-base font-medium leading-snug text-foreground transition-colors group-hover:text-accent">
+                    {project.data.title}
+                    <span aria-hidden="true" class="ml-1 inline-block transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5">→</span>
+                  </h2>
+                  <p class="mt-2 text-sm leading-relaxed text-muted-foreground">
+                    {project.data.description}
+                  </p>
+                  {project.data.stack.length > 0 && (
+                    <ul class="mt-3 flex flex-wrap gap-1.5" aria-label="Tech stack">
+                      {project.data.stack.map(tech => (
+                        <li>
+                          <span class="rounded-full bg-accent/10 px-3 py-1 text-xs font-medium text-accent">
+                            {tech}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              </a>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+  </Main>
+  <Footer />
+</Layout>

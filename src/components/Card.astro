@@ -1,0 +1,33 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { slugifyStr } from "@/utils/slugify";
+import { getPath } from "@/utils/getPath";
+import Datetime from "./Datetime.astro";
+
+type Props = {
+  variant?: "h2" | "h3";
+} & CollectionEntry<"blog">;
+
+const { id, data, filePath } = Astro.props;
+const { title, pubDatetime, modDatetime, timezone, format } = data;
+---
+
+<li class="group">
+  <a
+    href={getPath(id, filePath)}
+    class="grid grid-cols-[7rem_5rem_1fr] items-baseline gap-4 py-2 text-base text-muted-foreground transition-colors hover:text-foreground max-sm:grid-cols-[7rem_1fr] max-sm:gap-x-4 max-sm:gap-y-1"
+  >
+    <Datetime {pubDatetime} {modDatetime} {timezone} class="shrink-0" />
+    <span
+      class="font-mono text-xs uppercase tracking-wide text-muted-foreground max-sm:col-start-1 max-sm:row-start-2"
+    >
+      {format ?? ""}
+    </span>
+    <span
+      style={{ viewTransitionName: slugifyStr(title.replaceAll(".", "-")) }}
+      class="text-foreground max-sm:col-start-2 max-sm:row-span-2 max-sm:row-start-1"
+    >
+      {title}
+    </span>
+  </a>
+</li>

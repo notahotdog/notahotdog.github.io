@@ -1,0 +1,69 @@
+---
+import IconMoon from "@/assets/icons/IconMoon.svg";
+import IconSunHigh from "@/assets/icons/IconSunHigh.svg";
+import { SITE } from "@/config";
+
+const { pathname } = Astro.url;
+const currentPath =
+  pathname.endsWith("/") && pathname !== "/" ? pathname.slice(0, -1) : pathname;
+
+const isActive = (path: string) => {
+  if (path === "/") return currentPath === "/";
+  const currentPathArray = currentPath.split("/").filter(p => p.trim());
+  const pathArray = path.split("/").filter(p => p.trim());
+  return currentPath === path || currentPathArray[0] === pathArray[0];
+};
+
+const navLinks = [
+  { href: "/", label: "home" },
+  { href: "/projects", label: "projects" },
+  { href: "/posts", label: "blog" },
+  { href: "/about", label: "about" },
+];
+---
+
+<a
+  id="skip-to-content"
+  href="#main-content"
+  class="absolute start-16 -top-full z-50 bg-background px-3 py-2 text-foreground transition-all focus:top-4"
+>
+  Skip to content
+</a>
+
+<header class="app-layout pt-8 pb-12 sm:pt-12">
+  <nav
+    class="flex items-center justify-between gap-4 text-sm text-muted-foreground"
+  >
+    <ul class="flex items-center gap-5 sm:gap-7">
+      {
+        navLinks.map(link => (
+          <li>
+            <a
+              href={link.href}
+              class:list={[
+                "transition-colors hover:text-foreground",
+                { "text-foreground": isActive(link.href) },
+              ]}
+            >
+              {link.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+    {
+      SITE.lightAndDarkMode && (
+        <button
+          id="theme-btn"
+          class="relative size-8 transition-colors hover:text-foreground"
+          title="Toggle theme"
+          aria-label="Toggle theme"
+          aria-live="polite"
+        >
+          <IconMoon class="absolute top-[50%] left-[50%] size-[18px] -translate-[50%] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
+          <IconSunHigh class="absolute top-[50%] left-[50%] size-[18px] -translate-[50%] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
+        </button>
+      )
+    }
+  </nav>
+</header>

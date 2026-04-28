@@ -1,0 +1,213 @@
+---
+import { render, type CollectionEntry } from "astro:content";
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import Datetime from "@/components/Datetime.astro";
+import { slugifyStr } from "@/utils/slugify";
+import { SITE } from "@/config";
+
+type Props = {
+  project: CollectionEntry<"projects">;
+  projects: CollectionEntry<"projects">[];
+};
+
+const { project, projects } = Astro.props;
+
+const {
+  title,
+  description,
+  pubDatetime,
+  modDatetime,
+  timezone,
+  stack,
+  repo,
+  demo,
+  role,
+  ogImage: initOgImage,
+} = project.data;
+
+const { Content } = await render(project);
+
+let ogImageUrl: string | undefined;
+if (typeof initOgImage === "string") ogImageUrl = initOgImage;
+else if (initOgImage?.src) ogImageUrl = initOgImage.src;
+
+const ogImage = ogImageUrl
+  ? new URL(ogImageUrl, Astro.url.origin).href
+  : undefined;
+
+const layoutProps = {
+  title: `${title} | ${SITE.title}`,
+  author: SITE.author,
+  description,
+  pubDatetime,
+  modDatetime,
+  ogImage,
+  scrollSmooth: true,
+};
+
+const allProjects = projects.map(({ data: { title }, id }) => ({ id, title }));
+const currentIdx = allProjects.findIndex(p => p.id === project.id);
+const prev = currentIdx > 0 ? allProjects[currentIdx - 1] : null;
+const next =
+  currentIdx >= 0 && currentIdx < allProjects.length - 1
+    ? allProjects[currentIdx + 1]
+    : null;
+---
+
+<Layout {...layoutProps}>
+  <Header />
+  <main id="main-content" class="app-layout pb-20" data-pagefind-body>
+    <header class="mb-10">
+      <a
+        href="/projects/"
+        class="mb-6 inline-block font-mono text-xs text-muted-foreground transition-colors hover:text-accent"
+      >
+        ← back to projects
+      </a>
+      <h1
+        transition:name={slugifyStr(title.replaceAll(".", "-"))}
+        class="text-2xl font-semibold tracking-tight sm:text-3xl"
+      >
+        {title}
+      </h1>
+      <p class="mt-3 text-muted-foreground">{description}</p>
+
+      <div class="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2">
+        <Datetime {pubDatetime} {modDatetime} {timezone} size="lg" />
+        {
+          role && (
+            <>
+              <span aria-hidden="true" class="font-mono text-xs text-muted-foreground">/</span>
+              <span class="font-mono text-xs text-muted-foreground">{role}</span>
+            </>
+          )
+        }
+        {
+          repo && (
+            <a
+              href={repo}
+              target="_blank"
+              rel="noreferrer"
+              class="font-mono text-xs text-muted-foreground transition-colors hover:text-accent"
+            >
+              repo ↗
+            </a>
+          )
+        }
+        {
+          demo && (
+            <a
+              href={demo}
+              target="_blank"
+              rel="noreferrer"
+              class="font-mono text-xs text-muted-foreground transition-colors hover:text-accent"
+            >
+              demo ↗
+            </a>
+          )
+        }
+      </div>
+
+      {
+        stack.length > 0 && (
+          <ul class="mt-4 flex flex-wrap gap-1.5" aria-label="Tech stack">
+            {stack.map(tech => (
+              <li>
+                <span class="rounded-full bg-accent/10 px-3 py-1 text-xs font-medium text-accent">
+                  {tech}
+                </span>
+              </li>
+            ))}
+          </ul>
+        )
+      }
+    </header>
+
+    <article id="article" class="app-prose">
+      <Content />
+    </article>
+
+    <hr class="my-12 border-border" />
+
+    <nav
+      data-pagefind-ignore
+      class="grid grid-cols-1 gap-6 text-sm sm:grid-cols-2"
+    >
+      {
+        prev && (
+          <a
+            href={`/projects/${prev.id}/`}
+            class="flex flex-col gap-1 text-muted-foreground transition-colors hover:text-foreground"
+          >
+            <span class="font-mono text-xs">← previous</span>
+            <span class="text-foreground">{prev.title}</span>
+          </a>
+        )
+      }
+      {
+        next && (
+          <a
+            href={`/projects/${next.id}/`}
+            class="flex flex-col gap-1 text-muted-foreground transition-colors hover:text-foreground sm:col-start-2 sm:items-end sm:text-right"
+          >
+            <span class="font-mono text-xs">next →</span>
+            <span class="text-foreground">{next.title}</span>
+          </a>
+        )
+      }
+    </nav>
+  </main>
+  <Footer />
+</Layout>
+
+<script is:inline data-astro-rerun>
+  function createProgressBar() {
+    if (document.querySelector(".progress-container")) return;
+    const c = document.createElement("div");
+    c.className = "progress-container fixed top-0 z-10 h-px w-full bg-transparent";
+    const b = document.createElement("div");
+    b.className = "progress-bar h-px w-0 bg-accent/60";
+    b.id = "myBar";
+    c.appendChild(b);
+    document.body.appendChild(c);
+  }
+  createProgressBar();
+
+  document.addEventListener("scroll", () => {
+    const ws = document.body.scrollTop || document.documentElement.scrollTop;
+    const h =
+      document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const bar = document.getElementById("myBar");
+    if (bar) bar.style.width = (ws / h) * 100 + "%";
+  });
+
+  function attachCopyButtons() {
+    const label = "copy";
+    document.querySelectorAll("pre").forEach(block => {
+      if (block.querySelector(".copy-code")) return;
+      const wrapper = document.createElement("div");
+      wrapper.style.position = "relative";
+      const btn = document.createElement("button");
+      btn.className =
+        "copy-code absolute end-2 top-2 rounded border border-border bg-background/80 px-2 py-0.5 text-xs font-mono text-muted-foreground hover:text-accent";
+      btn.innerText = label;
+      block.setAttribute("tabindex", "0");
+      block.appendChild(btn);
+      block.parentNode?.insertBefore(wrapper, block);
+      wrapper.appendChild(block);
+      btn.addEventListener("click", async () => {
+        const code = block.querySelector("code");
+        await navigator.clipboard.writeText(code?.innerText ?? "");
+        btn.innerText = "copied";
+        setTimeout(() => (btn.innerText = label), 700);
+      });
+    });
+  }
+  attachCopyButtons();
+
+  document.addEventListener("astro:after-swap", () =>
+    window.scrollTo({ left: 0, top: 0, behavior: "instant" })
+  );
+</script>

@@ -1,0 +1,129 @@
+@plugin "@tailwindcss/typography";
+
+@layer base {
+  .app-prose {
+    @apply prose prose-slate dark:prose-invert max-w-none;
+
+    h1,
+    h2,
+    h3,
+    h4,
+    th {
+      @apply text-foreground;
+      letter-spacing: -0.01em;
+    }
+
+    h1 {
+      @apply text-2xl font-semibold sm:text-3xl;
+    }
+    h2 {
+      @apply mt-10 mb-3 text-xl font-semibold sm:text-2xl;
+    }
+    h3 {
+      @apply mt-8 mb-2 text-lg font-semibold;
+    }
+
+    p,
+    strong,
+    ol,
+    ul,
+    figcaption,
+    table,
+    code {
+      @apply text-foreground;
+    }
+
+    p {
+      @apply leading-7;
+    }
+
+    a {
+      @apply wrap-break-word text-accent underline decoration-accent/30 decoration-1 underline-offset-4 transition-colors hover:decoration-accent focus-visible:no-underline;
+    }
+
+    ul {
+      @apply overflow-x-clip;
+    }
+
+    li {
+      @apply marker:text-accent;
+    }
+
+    hr {
+      @apply border-border;
+    }
+
+    img {
+      @apply mx-auto rounded-md border border-border;
+    }
+
+    figcaption {
+      @apply text-sm text-muted-foreground;
+    }
+
+    table {
+      th,
+      td {
+        @apply border border-border p-2;
+      }
+
+      th {
+        @apply py-1.5;
+      }
+
+      code {
+        @apply break-all sm:break-normal;
+      }
+    }
+
+    code {
+      @apply rounded bg-muted px-1.5 py-0.5 text-sm wrap-break-word text-foreground before:content-none after:content-none;
+      font-family: var(--font-mono), ui-monospace, monospace;
+    }
+
+    .astro-code code {
+      @apply flex-[1_0_100%] bg-inherit p-0;
+    }
+
+    blockquote {
+      @apply border-s-accent/60 wrap-break-word text-muted-foreground;
+    }
+
+    details {
+      @apply inline-block cursor-pointer text-foreground select-none [&_p]:hidden [&_ul]:my-0!;
+    }
+
+    summary {
+      @apply focus-visible:no-underline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-accent/60;
+    }
+
+    pre {
+      @apply rounded-md border border-border focus-visible:border-transparent focus-visible:outline-2 focus-visible:outline-accent/60;
+    }
+  }
+
+  /* ===== Code Blocks & Syntax Highlighting ===== */
+  .astro-code {
+    @apply flex bg-(--shiki-light-bg) text-(--shiki-light) [&_span]:text-(--shiki-light);
+    font-family: var(--font-mono), ui-monospace, monospace;
+  }
+
+  html[data-theme="dark"] .astro-code {
+    @apply bg-(--shiki-dark-bg) text-(--shiki-dark) [&_span]:text-(--shiki-dark);
+  }
+
+  .astro-code {
+    .line.diff.add {
+      @apply relative inline-block w-full bg-green-400/10 before:absolute before:-left-3 before:text-green-500 before:content-['+'];
+    }
+    .line.diff.remove {
+      @apply relative inline-block w-full bg-red-500/10 before:absolute before:-left-3 before:text-red-500 before:content-['-'];
+    }
+    .line.highlighted {
+      @apply inline-block w-full bg-foreground/5;
+    }
+    .highlighted-word {
+      @apply rounded-sm border border-border px-0.5 py-px;
+    }
+  }
+}

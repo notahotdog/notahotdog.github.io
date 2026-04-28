@@ -1,0 +1,246 @@
+---
+import { Image } from "astro:assets";
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import { SITE } from "@/config";
+
+import marinaBayCup from "@/assets/images/activities/marina_bay_cup.jpg";
+import pocaTeam from "@/assets/images/activities/poca_team_photo.jpg";
+import photo1 from "@/assets/images/activities/photo_1_2026-04-27_15-39-47.jpg";
+import photo6 from "@/assets/images/activities/photo_6_2026-04-27_15-39-47.jpg";
+import photo7 from "@/assets/images/activities/photo_7_2026-04-27_15-39-47.jpg";
+import photo9 from "@/assets/images/activities/photo_9_2026-04-27_15-39-47.jpg";
+import photo10 from "@/assets/images/activities/photo_10_2026-04-27_15-39-47.jpg";
+import photo11 from "@/assets/images/activities/photo_11_2026-04-27_15-39-47.jpg";
+import kitesurfingBali from "@/assets/images/activities/kitesurfing Bali.jpg";
+
+// Edit captions/alt text below — they'll render as-is.
+const photos = [
+  {
+    src: photo1,
+    alt: "SB20 Grand Slam ",
+    caption: "SB20 Grand Slam",
+  },
+  {
+    src: marinaBayCup,
+    alt: "Marina Bay Cup",
+    caption: "Marina Bay Cup",
+  },
+  {
+    src: pocaTeam,
+    alt: "SB20 World Championship",
+    caption: "SB20 World Championship",
+  },
+  {
+    src: photo6,
+    alt: "Raja Muda Regatta",
+    caption: "Raja Muda Regatta",
+  },
+  {
+    src: photo7,
+    alt: "Night race along the straits of melacca",
+    caption: "Night race along the straits of melacca"
+  },
+  {
+    src: kitesurfingBali,
+    alt: "Kitesurfing in Bali",
+    caption: "Kitesurfing, Bali",
+  },
+  {
+    src: photo9,
+    alt: "Mt Ijen/Bromo",
+    caption: "Mt Ijen/Bromo",
+  },
+  {
+    src: photo10,
+    alt: "Harbin",
+    caption: "Harbin",
+  },
+  {
+    src: photo11,
+    alt: "Mt Rinjani",
+    caption: "Mt Rinjani",
+  },
+];
+---
+
+<Layout title={`About | ${SITE.title}`}>
+  <Header />
+  <main id="main-content" class="app-layout pb-20">
+    <article class="app-prose">
+      <p>
+        I'm Umar Bin Moiz — an AI Engineer based in Singapore with 2.5+ years
+        of experience building production-grade agentic AI systems and RAG
+        infrastructure inside regulated financial services environments. I
+        design and ship multi-agent pipelines, MCP-aligned agent frameworks,
+        and internal knowledge-base engines, and I enjoy translating vague
+        business requirements into clear, executable technical plans.
+      </p>
+
+      <p>
+        I'm currently finishing my <strong
+          >MSc in Digital Financial Technology at the National University of
+          Singapore (NUS)</strong
+        >, graduating June 2026.
+      </p>
+
+      <h2>What I Work On</h2>
+      <ul>
+        <li>
+          <strong>Agentic AI &amp; RAG systems</strong> — LangGraph multi-agent
+          orchestration, RAG-based document extraction, vector databases,
+          prompt engineering strategies
+        </li>
+        <li>
+          <strong>LLM serving &amp; infrastructure</strong> — vLLM, ONNX,
+          FastT5 with quantization and batch processing on A100/H100 GPU
+          clusters
+        </li>
+        <li>
+          <strong>MLOps &amp; platform</strong> — Kubernetes/OpenShift
+          deployments, model registry, drift detection, rollback strategies,
+          CI/CD (Jenkins, GitHub Actions)
+        </li>
+        <li>
+          <strong>Responsible AI</strong> — guardrails, evaluation pipelines,
+          observability via Grafana, incident triage
+        </li>
+      </ul>
+
+      <h2>Experience</h2>
+
+      <h3>AI Research &amp; Development Intern — Marsh McLennan</h3>
+      <p><em>June 2025 – November 2025, Singapore</em></p>
+      <p>
+        Architected and developed <strong>"Genie Broker"</strong>, an
+        end-to-end LLM-powered insurance renewal automation platform using
+        LangGraph multi-agent orchestration, RAG-based document extraction,
+        and FastAPI/TypeScript. Led PoC through to production-ready design,
+        projecting a <strong>75–90% reduction in manual processing time</strong
+        >. Evaluated agentic AI tools (AutoGen, CrewAI, LangChain, LangGraph)
+        across determinism, reliability, and production-readiness, and
+        configured the CI/CD pipeline via Polaris with Docker containerization.
+        Mentored other interns on agentic AI development practices and
+        enterprise deployment standards.
+      </p>
+
+      <h3>ML Ops &amp; Software Engineer, Conversational AI — DBS Bank</h3>
+      <p><em>July 2022 – August 2024, Singapore</em></p>
+      <p>
+        Built a GenAI virtual assistant with RAG-based knowledge retrieval and
+        real-time transcription for <strong
+          >500 Customer Service Officers serving 250,000+ monthly customers</strong
+        > — reducing manual review time by 90% and overall call handling time
+        by 20%. Built and optimized LLM serving infrastructure (vLLM, ONNX,
+        FastT5) on A100/H100 clusters scaling to <strong
+          >6,000+ concurrent users</strong
+        >. Managed end-to-end OpenShift deployments with auto-scaling,
+        zero-downtime updates, and rollback strategies. Engineered vector DB
+        infrastructure for RAG Q&amp;A systems (<strong
+          >70% retrieval speed improvement</strong
+        >), and built an LLM-powered KYC verification tool on GCP/Vertex AI
+        that cut manual verification time by 80%. Presented GenAI demos to
+        senior leadership, directly influencing the bank's decision to expand
+        GenAI initiatives bank-wide.
+      </p>
+
+      <h3>Data Analyst — DNV</h3>
+      <p><em>December 2020 – July 2021, Singapore</em></p>
+      <p>
+        Developed an internal MERN-stack automation platform and implemented
+        an ML solution for vessel fuel-efficiency optimization using AIS data
+        and predictive modeling, with outputs integrated into a Power BI +
+        custom-frontend dashboard for real-time operational decision making.
+      </p>
+
+      <h2>Education</h2>
+      <ul>
+        <li>
+          <strong>MSc, Digital Financial Technology</strong> — NUS (Aug 2024 –
+          Jun 2026)<br />
+          Coursework: AI, ML for Finance, Risk Analytics, Financial Modelling,
+          Deep Learning for Finance, Neural Networks
+        </li>
+        <li>
+          <strong>BEng, Computer Engineering</strong> — NUS (Aug 2018 – Jun
+          2022)<br />
+          Coursework: Software Engineering, AI, Computer Vision, NLP, Machine
+          Learning, Blockchain Engineering
+        </li>
+      </ul>
+
+      <h2>Certifications</h2>
+      <ul>
+        <li>AWS Certified Solutions Architect — Associate</li>
+        <li>AWS Certified Cloud Practitioner</li>
+        <li>Google Cloud Certified — Associate Cloud Engineer</li>
+      </ul>
+
+      <h2>Outside of work</h2>
+      <p>
+        Most of my time off-screen is spent <strong>on the water</strong> or
+        <strong>on a trail somewhere</strong>. I sail with the
+        <a href="https://nussailing.com/" target="_blank" rel="noreferrer"
+          >NUS Varsity Sailing Team</a
+        > (SB20 Worlds 2025, Grand Slam regattas in 2019, 2020, 2025, 2026),
+        and the rest of the year I'm usually off travelling and hiking, currently training for a half ironman
+      </p>
+    </article>
+
+    <!-- Photo gallery (outside .app-prose so prose styles don't interfere) -->
+    <section class="not-prose mt-8" aria-label="Photos">
+      <ul
+        class="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4"
+      >
+        {
+          photos.map(photo => (
+            <li class="group">
+              <figure>
+                <div class="overflow-hidden rounded-md border border-border bg-muted">
+                  <Image
+                    src={photo.src}
+                    alt={photo.alt}
+                    widths={[300, 600, 900]}
+                    sizes="(max-width: 640px) 50vw, 33vw"
+                    class="aspect-[4/3] h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                  />
+                </div>
+                {photo.caption && (
+                  <figcaption class="mt-2 font-mono text-xs text-muted-foreground">
+                    {photo.caption}
+                  </figcaption>
+                )}
+              </figure>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <article class="app-prose mt-12">
+      <h2>Get in Touch</h2>
+      <ul>
+        <li>
+          Email: <a href="mailto:umarmoiz@gmail.com">umarmoiz@gmail.com</a>
+        </li>
+        <li>
+          LinkedIn: <a
+            href="https://www.linkedin.com/in/umarmoiz/"
+            target="_blank"
+            rel="noreferrer">linkedin.com/in/umarmoiz</a
+          >
+        </li>
+        <li>
+          Resume: <a
+            href="/Umar_Moiz_Resume.pdf"
+            target="_blank"
+            rel="noreferrer">Umar_Moiz_Resume.pdf ↗</a
+          >
+        </li>
+        <li>Phone: +65 9656 9120</li>
+      </ul>
+    </article>
+  </main>
+  <Footer />
+</Layout>

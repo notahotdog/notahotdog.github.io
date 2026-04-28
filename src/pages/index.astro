@@ -1,0 +1,484 @@
+---
+import { getCollection } from "astro:content";
+import { Image } from "astro:assets";
+import Layout from "@/layouts/Layout.astro";
+import Card from "@/components/Card.astro";
+import getSortedPosts from "@/utils/getSortedPosts";
+import { SITE } from "@/config";
+import { SOCIALS } from "@/constants";
+import IconMoon from "@/assets/icons/IconMoon.svg";
+import IconSunHigh from "@/assets/icons/IconSunHigh.svg";
+import profilePhoto from "@/assets/images/activities/photo_10_2026-04-27_15-39-47.jpg";
+
+const posts = await getCollection("blog", ({ data }) => !data.draft);
+const sortedPosts = getSortedPosts(posts);
+const featuredPosts = sortedPosts
+  .filter(({ data }) => data.featured)
+  .slice(0, SITE.postPerIndex);
+
+const projectEntries = await getCollection(
+  "projects",
+  ({ data }) => !data.draft
+);
+const featuredProjects = projectEntries
+  .filter(p => p.data.featured)
+  .sort((a, b) => b.data.pubDatetime.valueOf() - a.data.pubDatetime.valueOf());
+
+type Experience = {
+  range: string;
+  role: string;
+  company: string;
+  href?: string;
+  description: string;
+  stack: string[];
+};
+
+const experience: Experience[] = [
+  {
+    range: "Jun 2025 — Nov 2025",
+    role: "AI R&D Intern",
+    company: "Marsh McLennan",
+    href: "https://www.marshmclennan.com/",
+    description:
+      "Architected Genie Broker, an end-to-end LLM-powered insurance renewal automation platform using LangGraph multi-agent orchestration, RAG document extraction, and FastAPI/TypeScript. Led PoC through to production-ready design — projecting a 75–90% reduction in manual processing time. Evaluated agentic AI tools (AutoGen, CrewAI, LangChain, LangGraph) for enterprise deployment, configured CI/CD via Polaris with Docker, and mentored other interns on agentic AI practices.",
+    stack: [
+      "LangGraph",
+      "RAG",
+      "FastAPI",
+      "TypeScript",
+      "Docker",
+      "Python",
+    ],
+  },
+  {
+    range: "Jul 2022 — Aug 2024",
+    role: "ML Ops & Software Engineer, Conversational AI",
+    company: "DBS Bank",
+    href: "https://www.dbs.com/",
+    description:
+      "Built a GenAI virtual assistant with RAG-based knowledge retrieval and real-time transcription for 500 Customer Service Officers serving 250,000+ monthly customers — reducing manual review time by 90% and call handling time by 20%. Optimized LLM serving infrastructure (vLLM, ONNX, FastT5) on A100/H100 clusters scaling to 6,000+ concurrent users. Managed end-to-end OpenShift deployments with auto-scaling, rollback, and zero-downtime updates. Improved RAG retrieval speed by 70%.",
+    stack: [
+      "Python",
+      "vLLM",
+      "ONNX",
+      "OpenShift",
+      "Kubernetes",
+      "RAG",
+      "Grafana",
+      "GCP",
+    ],
+  },
+  {
+    range: "Dec 2020 — Jul 2021",
+    role: "Data Analyst",
+    company: "DNV",
+    href: "https://www.dnv.com/",
+    description:
+      "Built an internal MERN-stack automation platform and shipped a vessel fuel-efficiency ML model using AIS data and predictive modeling. Integrated outputs into a Power BI + custom-frontend dashboard for real-time operational decisions.",
+    stack: ["MongoDB", "Express", "React", "Node.js", "Power BI"],
+  },
+];
+
+const sections = [
+  { id: "about", label: "About" },
+  { id: "experience", label: "Experience" },
+  ...(featuredProjects.length > 0
+    ? [{ id: "projects", label: "Projects" }]
+    : []),
+  ...(featuredPosts.length > 0 ? [{ id: "writing", label: "Writing" }] : []),
+];
+---
+
+<Layout>
+  <div class="spotlight" id="spotlight" aria-hidden="true"></div>
+
+  <div
+    class="mx-auto min-h-svh w-full max-w-screen-xl px-6 py-12 lg:flex lg:gap-12 lg:px-12 lg:py-16"
+  >
+    <!-- Sidebar -->
+    <aside
+      class="lg:sticky lg:top-0 lg:flex lg:max-h-svh lg:w-1/2 lg:flex-col lg:justify-between lg:py-16"
+    >
+      <div>
+        <Image
+          src={profilePhoto}
+          alt={SITE.author}
+          width={96}
+          height={96}
+          loading="eager"
+          class="mb-6 size-20 rounded-full border border-border object-cover sm:size-24"
+        />
+        <h1
+          class="text-4xl font-bold tracking-tight text-foreground sm:text-5xl"
+        >
+          {SITE.author}
+        </h1>
+        <h2
+          class="mt-3 text-lg font-medium text-foreground sm:text-xl"
+        >
+          AI Engineer
+        </h2>
+        <p class="mt-4 max-w-xs text-muted-foreground">
+          I build production-grade agentic AI systems and RAG infrastructure
+          in regulated financial services.
+        </p>
+
+        <nav class="nav mt-16 hidden lg:block" aria-label="In-page sections">
+          <ul>
+            {
+              sections.map(s => (
+                <li>
+                  <a
+                    href={`#${s.id}`}
+                    data-section-link={s.id}
+                    class="group flex items-center py-3 text-xs font-mono uppercase tracking-widest text-muted-foreground transition-colors hover:text-foreground"
+                  >
+                    <span
+                      class="nav-indicator mr-4 h-px w-8 bg-muted-foreground/60 transition-all group-hover:w-16 group-hover:bg-foreground"
+                    />
+                    <span class="nav-text">{s.label}</span>
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </nav>
+      </div>
+
+      <div class="mt-12 flex items-center gap-5 lg:mt-0">
+        <ul class="flex items-center gap-5">
+          {
+            SOCIALS.map(social => (
+              <li>
+                <a
+                  href={social.href}
+                  title={social.linkTitle}
+                  target={
+                    social.href.startsWith("mailto:") ? undefined : "_blank"
+                  }
+                  rel="noopener noreferrer"
+                  class="text-sm text-muted-foreground transition-colors hover:text-accent"
+                >
+                  {social.name}
+                </a>
+              </li>
+            ))
+          }
+          <li>
+            <a
+              href="/projects/"
+              class="text-sm text-muted-foreground transition-colors hover:text-accent"
+            >
+              Projects
+            </a>
+          </li>
+          <li>
+            <a
+              href="/posts/"
+              class="text-sm text-muted-foreground transition-colors hover:text-accent"
+            >
+              Blog
+            </a>
+          </li>
+          <li>
+            <a
+              href="/about/"
+              class="text-sm text-muted-foreground transition-colors hover:text-accent"
+            >
+              About
+            </a>
+          </li>
+          <li>
+            <a
+              href="/Umar_Moiz_Resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-sm text-muted-foreground transition-colors hover:text-accent"
+            >
+              Resume ↗
+            </a>
+          </li>
+        </ul>
+        {
+          SITE.lightAndDarkMode && (
+            <button
+              id="theme-btn"
+              class="relative size-8 text-muted-foreground transition-colors hover:text-accent"
+              title="Toggle theme"
+              aria-label="Toggle theme"
+              aria-live="polite"
+            >
+              <IconMoon class="absolute top-[50%] left-[50%] size-[18px] -translate-[50%] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
+              <IconSunHigh class="absolute top-[50%] left-[50%] size-[18px] -translate-[50%] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
+            </button>
+          )
+        }
+      </div>
+    </aside>
+
+    <!-- Main scroll column -->
+    <main id="main-content" class="lg:w-1/2 lg:py-16">
+      <!-- About -->
+      <section
+        id="about"
+        class="mb-24 scroll-mt-24"
+        aria-label="About"
+      >
+        <h2 class="sr-only">About</h2>
+        <div class="space-y-4 text-muted-foreground">
+          <p>
+            I'm an AI Engineer with 2.5+ years building production-grade
+            agentic AI systems and RAG infrastructure inside regulated
+            financial services. Most recently I was at
+            <a
+              href="https://www.marshmclennan.com/"
+              target="_blank"
+              rel="noreferrer"
+              class="text-foreground transition-colors hover:text-accent"
+              >Marsh McLennan</a
+            >, where I architected an end-to-end LLM-powered insurance
+            renewal automation platform.
+          </p>
+          <p>
+            Before that, I spent two years at
+            <a
+              href="https://www.dbs.com/"
+              target="_blank"
+              rel="noreferrer"
+              class="text-foreground transition-colors hover:text-accent"
+              >DBS Bank</a
+            > on the Conversational AI team — designing and shipping LLM
+            serving infrastructure, vector databases, and Kubernetes-based
+            model deployments serving hundreds of thousands of customers.
+          </p>
+          <p>
+            I'm currently finishing my MSc in Digital Financial Technology at
+            the
+            <a
+              href="https://nus.edu.sg/"
+              target="_blank"
+              rel="noreferrer"
+              class="text-foreground transition-colors hover:text-accent"
+              >National University of Singapore</a
+            > (graduating June 2026), and I sail for the NUS Varsity Sailing
+            Team in my free time.
+          </p>
+        </div>
+        <a
+          href="/about/"
+          class="group mt-6 inline-flex items-baseline font-mono text-xs uppercase tracking-widest text-muted-foreground transition-colors hover:text-accent"
+        >
+          Read more about me
+          <span
+            aria-hidden="true"
+            class="ml-1 inline-block transition-transform group-hover:translate-x-0.5"
+            >→</span
+          >
+        </a>
+      </section>
+
+      <!-- Experience -->
+      <section
+        id="experience"
+        class="mb-24 scroll-mt-24"
+        aria-label="Experience"
+      >
+        <h2 class="sr-only">Experience</h2>
+        <ol class="group/list">
+          {
+            experience.map(job => (
+              <li class="mb-10">
+                <div class="group relative grid gap-4 pb-1 transition-all sm:grid-cols-8 sm:gap-6 lg:hover:!opacity-100 lg:group-hover/list:opacity-50">
+                  <div class="absolute -inset-x-4 -inset-y-4 z-0 hidden rounded-md transition motion-reduce:transition-none lg:-inset-x-6 lg:block lg:group-hover:bg-surface/50 lg:group-hover:shadow-[inset_0_1px_0_0] lg:group-hover:shadow-border" />
+                  <header
+                    class="z-10 mb-2 mt-1 text-xs font-mono uppercase tracking-wide text-muted-foreground sm:col-span-2"
+                  >
+                    {job.range}
+                  </header>
+                  <div class="z-10 sm:col-span-6">
+                    <h3 class="font-medium leading-snug text-foreground">
+                      {job.href ? (
+                        <a
+                          href={job.href}
+                          target="_blank"
+                          rel="noreferrer"
+                          class="inline-flex items-baseline transition-colors hover:text-accent"
+                        >
+                          <span>
+                            {job.role} · <span class="inline-block">{job.company}</span>
+                            <span aria-hidden="true" class="ml-1 inline-block transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5">↗</span>
+                          </span>
+                        </a>
+                      ) : (
+                        <span>
+                          {job.role} · {job.company}
+                        </span>
+                      )}
+                    </h3>
+                    <p class="mt-2 text-sm leading-relaxed text-muted-foreground">
+                      {job.description}
+                    </p>
+                    <ul class="mt-3 flex flex-wrap gap-1.5" aria-label="Tech stack">
+                      {job.stack.map(tech => (
+                        <li>
+                          <span class="rounded-full bg-accent/10 px-3 py-1 text-xs font-medium text-accent">
+                            {tech}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </li>
+            ))
+          }
+        </ol>
+      </section>
+
+      <!-- Projects -->
+      {
+        featuredProjects.length > 0 && (
+          <section
+            id="projects"
+            class="mb-24 scroll-mt-24"
+            aria-label="Projects"
+          >
+            <h2 class="sr-only">Projects</h2>
+            <ul class="group/list">
+              {featuredProjects.map(project => (
+                <li class="mb-10">
+                  <a
+                    href={`/projects/${project.id}/`}
+                    class="group relative grid gap-4 pb-1 transition-all sm:grid-cols-8 sm:gap-6 lg:hover:!opacity-100 lg:group-hover/list:opacity-50"
+                  >
+                    <div class="absolute -inset-x-4 -inset-y-4 z-0 hidden rounded-md transition motion-reduce:transition-none lg:-inset-x-6 lg:block lg:group-hover:bg-surface/50 lg:group-hover:shadow-[inset_0_1px_0_0] lg:group-hover:shadow-border" />
+                    <div class="z-10 sm:col-span-2 sm:mt-1">
+                      <span class="block font-mono text-xs uppercase tracking-wide text-muted-foreground">
+                        Project
+                      </span>
+                    </div>
+                    <div class="z-10 sm:col-span-6">
+                      <h3 class="font-medium leading-snug text-foreground transition-colors group-hover:text-accent">
+                        {project.data.title}
+                        <span
+                          aria-hidden="true"
+                          class="ml-1 inline-block transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                        >
+                          →
+                        </span>
+                      </h3>
+                      <p class="mt-2 text-sm leading-relaxed text-muted-foreground">
+                        {project.data.description}
+                      </p>
+                      {project.data.stack.length > 0 && (
+                        <ul class="mt-3 flex flex-wrap gap-1.5">
+                          {project.data.stack.map(tech => (
+                            <li>
+                              <span class="rounded-full bg-accent/10 px-3 py-1 text-xs font-medium text-accent">
+                                {tech}
+                              </span>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </div>
+                  </a>
+                </li>
+              ))}
+            </ul>
+            <a
+              href="/projects/"
+              class="mt-2 inline-flex items-baseline font-mono text-xs uppercase tracking-widest text-muted-foreground transition-colors hover:text-accent"
+            >
+              All projects
+              <span aria-hidden="true" class="ml-1">→</span>
+            </a>
+          </section>
+        )
+      }
+
+      <!-- Writing -->
+      {
+        featuredPosts.length > 0 && (
+          <section id="writing" class="mb-16 scroll-mt-24" aria-label="Writing">
+            <h2 class="sr-only">Writing</h2>
+            <ul class="divide-y divide-border border-y border-border">
+              {featuredPosts.map(data => (
+                <Card {...data} />
+              ))}
+            </ul>
+            <a
+              href="/posts/"
+              class="mt-6 inline-flex items-baseline font-mono text-xs uppercase tracking-widest text-muted-foreground transition-colors hover:text-accent"
+            >
+              All posts
+              <span aria-hidden="true" class="ml-1">→</span>
+            </a>
+          </section>
+        )
+      }
+
+      <footer class="pb-8 text-sm text-muted-foreground">
+        <p>Building in progress.</p>
+      </footer>
+    </main>
+  </div>
+</Layout>
+
+<script>
+  document.addEventListener("astro:page-load", () => {
+    sessionStorage.setItem("backUrl", "/");
+
+    // Spotlight cursor effect
+    const spotlight = document.getElementById("spotlight");
+    if (spotlight && !window.matchMedia("(pointer: coarse)").matches) {
+      const onMove = (e: MouseEvent) => {
+        spotlight.style.setProperty("--mouse-x", `${e.clientX}px`);
+        spotlight.style.setProperty("--mouse-y", `${e.clientY}px`);
+      };
+      window.addEventListener("mousemove", onMove);
+    }
+
+    // Active section highlighting
+    const navLinks = document.querySelectorAll<HTMLAnchorElement>(
+      "[data-section-link]"
+    );
+    if (navLinks.length === 0) return;
+
+    const sectionMap = new Map<string, HTMLAnchorElement>();
+    navLinks.forEach(link => {
+      const id = link.dataset.sectionLink;
+      if (id) sectionMap.set(id, link);
+    });
+
+    const setActive = (id: string) => {
+      navLinks.forEach(l => {
+        const isActive = l.dataset.sectionLink === id;
+        l.classList.toggle("text-foreground", isActive);
+        l.classList.toggle("text-muted-foreground", !isActive);
+        const indicator = l.querySelector(".nav-indicator");
+        if (indicator) {
+          indicator.classList.toggle("w-16", isActive);
+          indicator.classList.toggle("w-8", !isActive);
+          indicator.classList.toggle("bg-foreground", isActive);
+          indicator.classList.toggle("bg-muted-foreground/60", !isActive);
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(
+      entries => {
+        const visible = entries
+          .filter(e => e.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (visible?.target.id) setActive(visible.target.id);
+      },
+      { rootMargin: "-30% 0px -55% 0px", threshold: [0, 0.25, 0.5, 0.75, 1] }
+    );
+
+    sectionMap.forEach((_, id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+  });
+</script>
