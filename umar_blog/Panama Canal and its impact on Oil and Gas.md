@@ -7,6 +7,7 @@ tags:
   - others
 featured: true
 draft: false
+projectUrl: https://github.com/notahotdog/ft5005-oilgas-prediction
 ---
 
 
@@ -18,6 +19,35 @@ So my project group at NUS asked a different question:
 > **What if forward-looking signals — what people are saying about the industry, and physical disruptions to oil shipping — could predict next quarter's revenue and EBITDA before the accounting catches up?**
 
 We built a five-stage ML pipeline forecasting next-quarter Revenue and EBITDA for U.S. oil & gas firms. The traditional features came from Compustat. On top of those, we layered four "advanced" features: news sentiment scored by an LLM, Panama Canal transit volumes, the Piotroski F-Score, and a custom Efficiency Score.
+
+```mermaid
+flowchart LR
+    subgraph trad["Compustat fundamentals"]
+      direction TB
+      f1["Income statement"]
+      f2["Balance sheet"]
+      f3["Cash flow"]
+    end
+    subgraph adv["Advanced features"]
+      direction TB
+      a1["News sentiment"]
+      a2["Panama Canal transits"]
+      a3["Piotroski F-Score"]
+      a4["Efficiency Score"]
+    end
+    model(["XGBoost / Stacking"])
+    rev["Next-Q Revenue"]
+    ebitda["Next-Q EBITDA"]
+    f1 --> model
+    f2 --> model
+    f3 --> model
+    a1 --> model
+    a2 --> model
+    a3 --> model
+    a4 --> model
+    model --> rev
+    model --> ebitda
+```
 
 Here's the surprise: **the advanced features barely helped.** That's actually the most interesting finding, and a big part of what this post is about.
 
@@ -200,8 +230,8 @@ The third one is the lesson I'll keep. Novel features make for a good pitch, but
 
 ---
 
-**Code:** [github.com/notahotdog/ft5005-oilgas-prediction](https://github.com/notahotdog/ft5005-oilgas-prediction)
-**Demo walkthrough:** [YouTube](https://youtu.be/c9IpvOwYtEc)
-**Full report:** in the [`docs/`](https://github.com/notahotdog/ft5005-oilgas-prediction/tree/main/docs) folder of the repo (PDF)
+- **Code:** [github.com/notahotdog/ft5005-oilgas-prediction](https://github.com/notahotdog/ft5005-oilgas-prediction)
+- **Demo walkthrough:** [YouTube](https://youtu.be/c9IpvOwYtEc)
+- **Full report:** in the [`docs/`](https://github.com/notahotdog/ft5005-oilgas-prediction/tree/main/docs) folder of the repo (PDF)
 
 Compustat data is licensed and not redistributed in the repo; you'll need WRDS access to fully reproduce.

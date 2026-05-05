@@ -3,11 +3,30 @@ import tailwindcss from "@tailwindcss/vite";
 import sitemap from "@astrojs/sitemap";
 import remarkToc from "remark-toc";
 import remarkCollapse from "remark-collapse";
+import { visit } from "unist-util-visit";
 import {
   transformerNotationDiff,
   transformerNotationHighlight,
   transformerNotationWordHighlight,
 } from "@shikijs/transformers";
+
+// Transform ```mermaid code fences into raw <pre class="mermaid">…</pre>
+// so client-side mermaid.js can render them. Bypasses Shiki for mermaid only.
+function remarkMermaid() {
+  return (tree: import("mdast").Root) => {
+    visit(tree, "code", (node: import("mdast").Code) => {
+      if (node.lang !== "mermaid") return;
+      const value = node.value ?? "";
+      const escaped = value
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;");
+      const htmlNode = node as unknown as import("mdast").Html;
+      htmlNode.type = "html";
+      htmlNode.value = `<pre class="mermaid">${escaped}</pre>`;
+    });
+  };
+}
 import { transformerFileName } from "./src/utils/transformers/fileName";
 import { SITE } from "./src/config";
 
@@ -20,7 +39,11 @@ export default defineConfig({
     }),
   ],
   markdown: {
-    remarkPlugins: [remarkToc, [remarkCollapse, { test: "Table of contents" }]],
+    remarkPlugins: [
+      remarkMermaid,
+      remarkToc,
+      [remarkCollapse, { test: "Table of contents" }],
+    ],
     shikiConfig: {
       // For more themes, visit https://shiki.style/themes
       themes: { light: "min-light", dark: "night-owl" },

@@ -26,6 +26,8 @@ pnpm-debug.log*
 # obsidian vault config
 .obsidian/
 .makemd/
+.keep-the-rhythm/
+.space/
 
 # pagefind
 

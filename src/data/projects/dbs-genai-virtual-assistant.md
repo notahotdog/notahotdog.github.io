@@ -15,6 +15,8 @@ featured: true
 draft: false
 ---
 
+<a class="bookmark" href="https://www.dbs.com/newsroom/DBS_empowers_its_Customer_Service_Officers_with_Gen_AI_powered_virtual_assistant_to_reduce_toil_and_enhance_customer_experience" target="_blank" rel="noreferrer"><span class="bookmark-title">DBS empowers its Customer Service Officers with Gen AI-powered virtual assistant to reduce toil and enhance customer experience</span><span class="bookmark-description">DBS is deploying a generative AI virtual assistant called "CSO Assistant" to its 500 customer service officers in Singapore by the end of 2024. The in-house developed tool transcribes customer queries in real-time and retrieves relevant information from the bank's knowledge base, expected to reduce call handling time by up to 20%.</span><span class="bookmark-url"><img src="https://www.google.com/s2/favicons?domain=dbs.com&sz=32" alt="" /><span>dbs.com/newsroom/DBS_empowers_its_Customer_Service_Officers_with_Gen_AI_powered_virtual_assistant…</span></span></a>
+
 ## TL;DR
 
 A production GenAI assistant deployed to 500 Customer Service Officers serving 250,000+ monthly customers at DBS Bank. Combined RAG-based knowledge retrieval with real-time call transcription, reducing manual post-call review time by **90%** and overall call handling time by **20%**.

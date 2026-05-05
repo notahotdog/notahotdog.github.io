@@ -176,5 +176,74 @@ const structuredData = {
 
     <!-- Load full theme logic -->
     <script src="../scripts/theme.ts"></script>
+
+    <!-- Mermaid: lazy-loaded, only on pages that contain diagrams -->
+    <script>
+      async function renderMermaid() {
+        const nodes = document.querySelectorAll<HTMLElement>("pre.mermaid");
+        if (nodes.length === 0) return;
+        const { default: mermaid } = await import("mermaid");
+        const isDark =
+          document.firstElementChild?.getAttribute("data-theme") === "dark";
+        mermaid.initialize({
+          startOnLoad: false,
+          securityLevel: "loose",
+          theme: "base",
+          fontFamily:
+            "var(--font-sans), ui-sans-serif, system-ui, -apple-system, sans-serif",
+          themeVariables: {
+            background: "transparent",
+            primaryColor: isDark ? "#0f1f3d" : "#f1f5f9",
+            primaryTextColor: isDark ? "#e2e8f0" : "#0f172a",
+            primaryBorderColor: isDark ? "#334155" : "#cbd5e1",
+            lineColor: isDark ? "#64748b" : "#94a3b8",
+            secondaryColor: isDark ? "#1e293b" : "#e2e8f0",
+            tertiaryColor: isDark ? "#0a192f" : "#ffffff",
+            mainBkg: isDark ? "#0f1f3d" : "#f1f5f9",
+            nodeBorder: isDark ? "#22d3ee" : "#0891b2",
+            clusterBkg: isDark ? "#0a192f" : "#f8fafc",
+            clusterBorder: isDark ? "#1e293b" : "#cbd5e1",
+            edgeLabelBackground: isDark ? "#0a192f" : "#ffffff",
+          },
+        });
+        for (const node of nodes) {
+          if (node.dataset.processed === "true") continue;
+          const code = node.textContent ?? "";
+          const id = `mmd-${Math.random().toString(36).slice(2, 9)}`;
+          try {
+            const { svg } = await mermaid.render(id, code);
+            node.innerHTML = svg;
+            node.dataset.processed = "true";
+            node.classList.add("mermaid-rendered");
+          } catch (err) {
+            console.error("Mermaid render error", err);
+          }
+        }
+      }
+
+      renderMermaid();
+      document.addEventListener("astro:page-load", renderMermaid);
+      // Re-render when theme toggles
+      const themeObserver = new MutationObserver(() => {
+        document
+          .querySelectorAll<HTMLElement>("pre.mermaid")
+          .forEach(n => (n.dataset.processed = ""));
+        document
+          .querySelectorAll<HTMLElement>("pre.mermaid svg")
+          .forEach(svg => svg.remove());
+        document.querySelectorAll<HTMLElement>("pre.mermaid").forEach(n => {
+          if (n.dataset.source) n.textContent = n.dataset.source;
+        });
+        renderMermaid();
+      });
+      // Cache source so theme re-render works
+      document.querySelectorAll<HTMLElement>("pre.mermaid").forEach(n => {
+        if (!n.dataset.source) n.dataset.source = n.textContent ?? "";
+      });
+      themeObserver.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ["data-theme"],
+      });
+    </script>
   </body>
 </html>

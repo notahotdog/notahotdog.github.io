@@ -37,8 +37,7 @@ const experience: Experience[] = [
   {
     range: "Jun 2025 — Nov 2025",
     role: "AI R&D Intern",
-    company: "Marsh McLennan",
-    href: "https://www.marshmclennan.com/",
+    company: "Marsh",
     description:
       "Architected Genie Broker, an end-to-end LLM-powered insurance renewal automation platform using LangGraph multi-agent orchestration, RAG document extraction, and FastAPI/TypeScript. Led PoC through to production-ready design — projecting a 75–90% reduction in manual processing time. Evaluated agentic AI tools (AutoGen, CrewAI, LangChain, LangGraph) for enterprise deployment, configured CI/CD via Polaris with Docker, and mentored other interns on agentic AI practices.",
     stack: [
@@ -54,7 +53,6 @@ const experience: Experience[] = [
     range: "Jul 2022 — Aug 2024",
     role: "ML Ops & Software Engineer, Conversational AI",
     company: "DBS Bank",
-    href: "https://www.dbs.com/",
     description:
       "Built a GenAI virtual assistant with RAG-based knowledge retrieval and real-time transcription for 500 Customer Service Officers serving 250,000+ monthly customers — reducing manual review time by 90% and call handling time by 20%. Optimized LLM serving infrastructure (vLLM, ONNX, FastT5) on A100/H100 clusters scaling to 6,000+ concurrent users. Managed end-to-end OpenShift deployments with auto-scaling, rollback, and zero-downtime updates. Improved RAG retrieval speed by 70%.",
     stack: [
@@ -72,7 +70,6 @@ const experience: Experience[] = [
     range: "Dec 2020 — Jul 2021",
     role: "Data Analyst",
     company: "DNV",
-    href: "https://www.dnv.com/",
     description:
       "Built an internal MERN-stack automation platform and shipped a vessel fuel-efficiency ML model using AIS data and predictive modeling. Integrated outputs into a Power BI + custom-frontend dashboard for real-time operational decisions.",
     stack: ["MongoDB", "Express", "React", "Node.js", "Power BI"],
@@ -230,26 +227,15 @@ const sections = [
             I'm an AI Engineer with 2.5+ years building production-grade
             agentic AI systems and RAG infrastructure inside regulated
             financial services. Most recently I was at
-            <a
-              href="https://www.marshmclennan.com/"
-              target="_blank"
-              rel="noreferrer"
-              class="text-foreground transition-colors hover:text-accent"
-              >Marsh McLennan</a
-            >, where I architected an end-to-end LLM-powered insurance
-            renewal automation platform.
+            <span class="text-foreground">Marsh</span>, where I architected an
+            end-to-end LLM-powered insurance renewal automation platform.
           </p>
           <p>
             Before that, I spent two years at
-            <a
-              href="https://www.dbs.com/"
-              target="_blank"
-              rel="noreferrer"
-              class="text-foreground transition-colors hover:text-accent"
-              >DBS Bank</a
-            > on the Conversational AI team — designing and shipping LLM
-            serving infrastructure, vector databases, and Kubernetes-based
-            model deployments serving hundreds of thousands of customers.
+            <span class="text-foreground">DBS Bank</span> on the Conversational
+            AI team — designing and shipping LLM serving infrastructure, vector
+            databases, and Kubernetes-based model deployments serving hundreds
+            of thousands of customers.
           </p>
           <p>
             I'm currently finishing my MSc in Digital Financial Technology at

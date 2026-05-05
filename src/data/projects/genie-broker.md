@@ -2,7 +2,7 @@
 title: "Genie Broker"
 description: "An end-to-end LLM-powered insurance renewal automation platform — multi-agent orchestration, RAG document extraction, and a production-ready handover."
 pubDatetime: 2025-11-15T00:00:00Z
-role: "AI R&D Intern @ Marsh McLennan"
+role: "AI R&D Intern @ Marsh"
 stack:
   - LangGraph
   - RAG
@@ -16,7 +16,7 @@ draft: false
 
 ## TL;DR
 
-Genie Broker is a LangGraph-based multi-agent system that automates insurance renewal across four policy complexity tiers, projecting a **75–90% reduction in manual processing time**. Built end-to-end during a 6-month R&D internship at Marsh McLennan and handed over to the development team with full technical documentation.
+Genie Broker is a LangGraph-based multi-agent system that automates insurance renewal across four policy complexity tiers, projecting a **75–90% reduction in manual processing time**. Built end-to-end during a 6-month R&D internship at Marsh and handed over to the development team with full technical documentation.
 
 ## The problem
 

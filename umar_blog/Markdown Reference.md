@@ -6,8 +6,9 @@ format: notes
 tags:
   - meta
   - reference
-featured: true
-draft: false
+featured: false
+draft: true
+projectUrl: ""
 ---
 
 A cheat sheet for everything you can do in a post. View the source of this file in Obsidian, then check the rendered output on the live site.

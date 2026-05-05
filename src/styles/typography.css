@@ -100,6 +100,35 @@
     pre {
       @apply rounded-md border border-border focus-visible:border-transparent focus-visible:outline-2 focus-visible:outline-accent/60;
     }
+
+    .bookmark {
+      @apply my-6 block rounded-md border border-border p-4 no-underline transition-colors hover:border-accent hover:bg-surface/40;
+    }
+    .bookmark .bookmark-title {
+      @apply block line-clamp-2 font-medium text-foreground no-underline;
+    }
+    .bookmark .bookmark-description {
+      @apply mt-1 block line-clamp-2 text-sm text-muted-foreground no-underline;
+    }
+    .bookmark .bookmark-url {
+      @apply mt-3 flex items-center gap-2 text-xs text-muted-foreground no-underline;
+    }
+    .bookmark .bookmark-url img {
+      @apply m-0 size-4 shrink-0 rounded-none border-0;
+    }
+    .bookmark .bookmark-url > span:last-child {
+      @apply truncate;
+    }
+
+    pre.mermaid {
+      @apply my-6 flex justify-center overflow-x-auto border-0 bg-transparent p-4;
+    }
+    pre.mermaid:not(.mermaid-rendered) {
+      @apply opacity-0;
+    }
+    pre.mermaid svg {
+      @apply h-auto max-w-full;
+    }
   }
 
   /* ===== Code Blocks & Syntax Highlighting ===== */

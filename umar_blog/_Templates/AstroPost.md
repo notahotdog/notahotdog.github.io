@@ -7,5 +7,6 @@ tags:
   - others
 featured: false
 draft: true
+projectUrl: ""  # optional: shows a "Visit Project" button on the post
 ---
 
